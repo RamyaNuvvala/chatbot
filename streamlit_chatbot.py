@@ -31,17 +31,18 @@ class CollegeChatbot:
         }
 
     def send_message(self, user_message):
-       
+        st.write(f"Chatbot: {self.get_welcome_message()}")
         st.write(f"You: {user_message}")
         bot_response = self.get_bot_response(user_message)
         st.write(f"Chatbot: {bot_response}")
         self.open_links_in_message(bot_response)
 
-   
+    def get_welcome_message(self):
+        return "Welcome to the College Chatbot! Ask me about the college website, departments, academic calendars, and more."
 
     def get_bot_response(self, user_message):
         if "moodle" in user_message.lower():
-            return f"Sure! You can access the college Moodle [here]({self.college_data['moodle_link']})."
+            return f"Sure! You can access the college Moodle [here]{self.college_data['moodle_link']}."
         elif "college website" in user_message.lower():
             return f"Visit the college website [here]({self.college_data['college_website']})."
         elif "departments" in user_message.lower():
@@ -74,12 +75,8 @@ class CollegeChatbot:
 
     def open_links_in_message(self, message):
         links = self.extract_links(message)
-        if links:
-            st.write("Chatbot: Here is a relevant link:")
-            for link in links:
-                st.markdown(f"{link}", unsafe_allow_html=True)
-        else:
-            st.write(f"Chatbot: {message}")
+        for link in links:
+            st.markdown(f"[Link]({link})")
 
     def extract_links(self, text):
         return re.findall(r'(https?://\S+)', text)
