@@ -42,7 +42,7 @@ class CollegeChatbot:
 
     def get_bot_response(self, user_message):
         if "moodle" in user_message.lower():
-            return f"Sure! You can access the college Moodle [here]{self.college_data['moodle_link']}."
+            return f"Sure! You can access the college Moodle here({self.college_data['moodle_link']})."
         elif "college website" in user_message.lower():
             return f"Visit the college website [here]({self.college_data['college_website']})."
         elif "departments" in user_message.lower():
