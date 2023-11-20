@@ -74,8 +74,12 @@ class CollegeChatbot:
 
     def open_links_in_message(self, message):
         links = self.extract_links(message)
-        for link in links:
-            st.markdown(f"[Link]({link})")
+        if links:
+            st.write("Chatbot: Here is a relevant link:")
+            for link in links:
+                st.markdown(f"{link}", unsafe_allow_html=True)
+        else:
+            st.write(f"Chatbot: {message}")
 
     def extract_links(self, text):
         return re.findall(r'(https?://\S+)', text)
