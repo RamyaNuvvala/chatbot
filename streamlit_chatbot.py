@@ -31,9 +31,7 @@ class CollegeChatbot:
         }
 
     
-        
-
-   def send_message(self, user_message):
+    def send_message(self, user_message):
         st.write(f"You: {user_message}")
         bot_response = self.get_bot_response(user_message)
         st.write(f"Chatbot: {bot_response}")
