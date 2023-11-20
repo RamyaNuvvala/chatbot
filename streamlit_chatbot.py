@@ -37,8 +37,7 @@ class CollegeChatbot:
         st.write(f"Chatbot: {bot_response}")
         self.open_links_in_message(bot_response)
 
-    def get_welcome_message(self):
-        return "Welcome to the College Chatbot! Ask me about the college website, departments, academic calendars, and more."
+   
 
     def get_bot_response(self, user_message):
         if "moodle" in user_message.lower():
