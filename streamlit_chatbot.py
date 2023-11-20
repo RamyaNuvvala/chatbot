@@ -31,14 +31,18 @@ class CollegeChatbot:
         }
 
     def send_message(self, user_message):
+        st.write(f"Chatbot: {self.get_welcome_message()}")
         st.write(f"You: {user_message}")
         bot_response = self.get_bot_response(user_message)
         st.write(f"Chatbot: {bot_response}")
         self.open_links_in_message(bot_response)
 
+    def get_welcome_message(self):
+        return "Welcome to the College Chatbot! Ask me about the college website, departments, academic calendars, and more."
+
     def get_bot_response(self, user_message):
         if "moodle" in user_message.lower():
-            return f"Sure! You can access the college Moodle[here]{self.college_data['moodle_link']}."
+            return f"Sure! You can access the college Moodle [here]({self.college_data['moodle_link']})."
         elif "college website" in user_message.lower():
             return f"Visit the college website [here]({self.college_data['college_website']})."
         elif "departments" in user_message.lower():
@@ -69,10 +73,6 @@ class CollegeChatbot:
                 return f"Here is the academic calendar for {semester}: [View Academic Calendar]({pdf_path})"
         return "I don't have the academic calendar for that semester."
 
-    def display_message(self, message):
-        st.write(message)
-        self.open_links_in_message(message)
-
     def open_links_in_message(self, message):
         links = self.extract_links(message)
         for link in links:
@@ -83,6 +83,12 @@ class CollegeChatbot:
 
 def main():
     st.title("College Chatbot")
+    st.markdown(
+        """
+        #### Welcome to the College Chatbot!
+        Ask me about the college website, departments, academic calendars, and more.
+        """
+    )
     chatbot = CollegeChatbot()
 
     user_input = st.text_input("You:")
