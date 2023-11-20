@@ -30,48 +30,33 @@ class CollegeChatbot:
             }
         }
 
-    def send_message(self, user_message):
-        st.write(f"Chatbot: {self.get_welcome_message()}")
+    
+        
+
+   def send_message(self, user_message):
         st.write(f"You: {user_message}")
         bot_response = self.get_bot_response(user_message)
         st.write(f"Chatbot: {bot_response}")
         self.open_links_in_message(bot_response)
 
-    def get_welcome_message(self):
-        return "Welcome to the College Chatbot! Ask me about the college website, departments, academic calendars, and more."
-
     def get_bot_response(self, user_message):
         if "moodle" in user_message.lower():
-            return f"Sure! You can access the college Moodle [here]({self.college_data['moodle_link']})."
+            return self.get_clickable_link("Sure! You can access the college Moodle [here].", self.college_data['moodle_link'])
         elif "college website" in user_message.lower():
-            return f"Visit the college website [here]({self.college_data['college_website']})."
+            return self.get_clickable_link("Visit the college website [here].", self.college_data['college_website'])
         elif "departments" in user_message.lower():
             return self.get_department_links()
         elif "academic calendar" in user_message.lower():
             return self.get_academic_calendar(user_message)
         else:
-            department_link = self.get_department_link(user_message)
+            department_link, _ = self.get_department_link(user_message)
             if department_link:
-                return department_link
+                return self.get_clickable_link(department_link, self.college_data['departments'][user_message]['link'])
             else:
                 return "I'm sorry, I couldn't understand your query."
 
-    def get_department_link(self, user_message):
-        user_message = user_message.lower()
-        for department, data in self.college_data['departments'].items():
-            if department.lower() in user_message:
-                return f"Here is the link for the {department} department: [Visit Department Website]({data['link']})"
-        for short_form, department in self.short_forms.items():
-            if short_form in user_message:
-                return f"Here is the link for the {department} department: [Visit Department Website]({self.college_data['departments'][department]['link']})"
-        return "I don't have information about that department."
-
-    def get_academic_calendar(self, user_message):
-        user_message = user_message.lower()
-        for semester, pdf_path in self.college_data['academic_calendars'].items():
-            if any(keyword in user_message for keyword in semester.lower().split()):
-                return f"Here is the academic calendar for {semester}: [View Academic Calendar]({pdf_path})"
-        return "I don't have the academic calendar for that semester."
+    def get_clickable_link(self, message, link):
+        return f"{message} [{link}]({link})"
 
     def open_links_in_message(self, message):
         links = self.extract_links(message)
@@ -83,12 +68,7 @@ class CollegeChatbot:
 
 def main():
     st.title("College Chatbot")
-    st.markdown(
-        """
-        #### Welcome to the College Chatbot!
-        Ask me about the college website, departments, academic calendars, and more.
-        """
-    )
+    
     chatbot = CollegeChatbot()
 
     user_input = st.text_input("You:")
