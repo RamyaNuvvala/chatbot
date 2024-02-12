@@ -1,5 +1,4 @@
 import streamlit as st
-import webbrowser
 
 class CollegeChatbot:
     def __init__(self):
@@ -39,8 +38,8 @@ def main():
         selected_department = st.selectbox("", list(department_links.keys()))
         if st.button("Open Department Link"):
             st.write(f"Opening link for {selected_department}:")
-            webbrowser.open_new_tab(department_links[selected_department])
+            st.markdown(f"[{selected_department} Department Website]({department_links[selected_department]})")
 
 if __name__ == "__main__":
     main()
-        
+    
