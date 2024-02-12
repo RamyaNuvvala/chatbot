@@ -52,10 +52,7 @@ def main():
     st.write("You can start chatting. Type your message below.")
     st.write("---")
 
-    # Initialize state variable for last user input
-    last_user_input = st.empty()
-    
-    user_input = last_user_input.text_input("You:")
+    user_input = st.text_input("You:")
     st.write("---")
     
     # Initialize state variable for department selection
@@ -75,12 +72,9 @@ def main():
                     bot_response = get_response(department)
                     st.write("---")
                     st.markdown(f"**Bot:** {bot_response}")
-            # Reset last user input if a department is selected
-            last_user_input.text_input("You:", value="")
-        else:
-            # Update last user input if it's not related to departments
-            last_user_input.text_input("You:", value=user_input)
-    
+        # Clear text input after processing user input
+        user_input = ""
+
     # Hide department selection buttons if a department is selected
     if not show_departments:
         st.write("---")
@@ -88,4 +82,4 @@ def main():
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-        
+            
