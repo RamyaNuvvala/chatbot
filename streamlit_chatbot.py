@@ -21,11 +21,14 @@ def get_response(user_input):
     # Convert input to lowercase for case-insensitive matching
     user_input = user_input.lower()
     
-    # Check if input matches any predefined responses
-    if user_input in responses:
-        return responses[user_input]
-    elif user_input.title() in department_links:  # Check if the department is selected
+    # Check if input matches any departmental links
+    if user_input.title() in department_links:
         return f"Here is the link to the {user_input.title()} department: [{user_input.title()}]({department_links[user_input.title()]})"
+    
+    # Check if input matches any predefined responses
+    elif user_input in responses:
+        return responses[user_input]
+    
     else:
         return responses["default"]
 
@@ -49,4 +52,3 @@ def main():
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-        
