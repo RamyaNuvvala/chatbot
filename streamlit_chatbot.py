@@ -54,9 +54,8 @@ def main():
     conversation_history = []
 
     # Display text input field for user input
-    user_input = st.text_area("You:", placeholder="Type here and press Enter")
+    user_input = st.text_input("You:")
 
-    # If user input is not empty, process it
     if user_input:
         # Add user input to conversation history
         conversation_history.append(f"You: {user_input}")
@@ -66,9 +65,9 @@ def main():
         conversation_history.append(f"Bot: {bot_response}")
 
         # Display conversation history
-        st.write("\n".join(conversation_history))
+        st.text_area("Conversation History:", value="\n".join(conversation_history), height=200, readonly=True)
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-        
+                                                                                  
