@@ -1,49 +1,52 @@
 import streamlit as st
-import webbrowser
 
-class CollegeChatbot:
-    def __init__(self):
-        pass
+# Define a dictionary of predefined responses
+responses = {
+    "hi": "Hello! How can I help you?",
+    "how are you": "I'm just a bot, but thanks for asking!",
+    "bye": "Goodbye! Have a great day.",
+    "default": "I'm sorry, I don't understand. Can you please rephrase?"
+}
 
-    def send_message(self, user_message):
-        st.write(f"You: {user_message}")
-        bot_response = self.get_bot_response(user_message)
-        st.write(f"Chatbot: {bot_response}")
+# Define departmental links
+department_links = {
+    "Computer Science": "http://www.example.com/computer_science",
+    "Biology": "http://www.example.com/biology",
+    "Physics": "http://www.example.com/physics",
+    # Add more departments and corresponding links as needed
+}
 
-    def get_bot_response(self, user_message):
-        # Welcome message
-        return "Hello! Welcome to the College Chatbot. How can I assist you today?"
+# Function to generate response based on user input
+def get_response(user_input):
+    # Convert input to lowercase for case-insensitive matching
+    user_input = user_input.lower()
+    
+    # Check if input matches any predefined responses
+    if user_input in responses:
+        return responses[user_input]
+    elif user_input.title() in department_links:  # Check if the department is selected
+        return f"Here is the link to the {user_input.title()} department: [{user_input.title()}]({department_links[user_input.title()]})"
+    else:
+        return responses["default"]
 
+# Main function to interact with the user
 def main():
     st.title("College Chatbot")
-    chatbot = CollegeChatbot()
-    # Display welcoming message automatically when the chatbot is loaded
-    st.write("Hello! Welcome to the College Chatbot. How can I assist you today?")
+    st.write("You can start chatting. Type your message below.")
 
     user_input = st.text_input("You:")
-    if st.button("Send"):
-        chatbot.send_message(user_input)
-
-    # Dictionary mapping department names to their respective links
-    department_links = {
-        "Computer Science and Engineering": "http://cse.rvrjcce.ac.in/",
-        "Electronics and Communication Engineering": "http://ece.rvrjcce.ac.in/",
-        "Electrical and Electronics Engineering": "http://eee.rvrjcce.ac.in/",
-        # Add more departments and links as needed
-    }
-
-    # Button for departments label
-    if st.button("Departments"):
+    if user_input:
+        bot_response = get_response(user_input)
+        st.markdown(f"Bot: {bot_response}")
+        
+        # Create department selection buttons
         st.write("Select a department:")
-        # Scroll-down selection for departments
-        selected_department = st.selectbox("", list(department_links.keys()))
-        if selected_department:
-            if st.button("Open Department Link"):
-                st.write(f"Opening link for {selected_department}:")
-                webbrowser.open_new_tab(department_links[selected_department])
-        else:
-            st.write("Please select a department first.")
+        for department in department_links:
+            if st.button(department):
+                bot_response = get_response(department)
+                st.markdown(f"Bot: {bot_response}")
 
+# Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
         
