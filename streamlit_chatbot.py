@@ -38,7 +38,7 @@ def main():
         selected_department = st.selectbox("", list(department_links.keys()))
         if st.button("Open Department Link"):
             st.write(f"Opening link for {selected_department}:")
-            st.write(f"[{selected_department} Department Website]({department_links[selected_department]})")
+            st.markdown(f"[{selected_department} Department Website]({department_links[selected_department]})")
 
 if __name__ == "__main__":
     main()
