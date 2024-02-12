@@ -2,7 +2,12 @@ import streamlit as st
 
 class CollegeChatbot:
     def __init__(self):
-        pass
+        self.department_links = {
+            "Computer Science and Engineering": "http://cse.rvrjcce.ac.in/",
+            "Electronics and Communication Engineering": "http://ece.rvrjcce.ac.in/",
+            "Electrical and Electronics Engineering": "http://eee.rvrjcce.ac.in/",
+            # Add more department links as needed
+        }
 
     def send_message(self, user_message):
         st.write(f"You: {user_message}")
@@ -31,13 +36,16 @@ def main():
     # Example of using text as buttons for specific selections
     st.write("Select a department:")
     if st.button("Computer Science and Engineering"):
-        chatbot.send_message("Computer Science and Engineering")
+        open_link(chatbot.department_links["Computer Science and Engineering"])
     if st.button("Electronics and Communication Engineering"):
-        chatbot.send_message("Electronics and Communication Engineering")
+        open_link(chatbot.department_links["Electronics and Communication Engineering"])
     if st.button("Electrical and Electronics Engineering"):
-        chatbot.send_message("Electrical and Electronics Engineering")
+        open_link(chatbot.department_links["Electrical and Electronics Engineering"])
     # Add more buttons for other departments
+
+def open_link(url):
+    st.markdown(f"[Open Link]({url})")
 
 if __name__ == "__main__":
     main()
-        
+    
