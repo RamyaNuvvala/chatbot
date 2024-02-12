@@ -23,13 +23,23 @@ def main():
     if st.button("Send"):
         chatbot.send_message(user_input)
 
+    # Dictionary mapping department names to their respective links
+    department_links = {
+        "Computer Science and Engineering": "http://cse.rvrjcce.ac.in/",
+        "Electronics and Communication Engineering": "http://ece.rvrjcce.ac.in/",
+        "Electrical and Electronics Engineering": "http://eee.rvrjcce.ac.in/",
+        # Add more departments and links as needed
+    }
+
     # Button for departments label
     if st.button("Departments"):
         st.write("Select a department:")
         # Scroll-down selection for departments
-        selected_department = st.selectbox("", ["Computer Science and Engineering", "Electronics and Communication Engineering", "Electrical and Electronics Engineering"])
-        st.write(f"Selected Department: {selected_department}")
+        selected_department = st.selectbox("", list(department_links.keys()))
+        if st.button("Open Department Link"):
+            st.write(f"Opening link for {selected_department}:")
+            st.write(f"[{selected_department} Department Website]({department_links[selected_department]})")
 
 if __name__ == "__main__":
     main()
-        
+    
