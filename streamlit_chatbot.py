@@ -2,12 +2,16 @@ import streamlit as st
 
 class CollegeChatbot:
     def __init__(self):
-        self.links = {
-            "College Website": "http://www.collegewebsite.com",
-            "Moodle": "http://courses.rvrjc.ac.in/moodle/",
+        self.department_links = {
             "Computer Science and Engineering": "http://cse.rvrjcce.ac.in/",
             "Electronics and Communication Engineering": "http://ece.rvrjcce.ac.in/",
             "Electrical and Electronics Engineering": "http://eee.rvrjcce.ac.in/",
+            # Add more department links as needed
+        }
+
+        self.other_links = {
+            "College Website": "http://www.collegewebsite.com",
+            "Moodle": "http://courses.rvrjc.ac.in/moodle/",
             "Placement Details": "http://www.collegewebsite.com/placement",
             "Notices": "http://www.collegewebsite.com/notices",
             "Academic Calendar": "http://www.collegewebsite.com/academic-calendar",
@@ -38,16 +42,21 @@ def main():
     if st.button("Send"):
         chatbot.send_message(user_input)
 
-    # Button to display links options
-    if st.button("Links"):
-        st.write("Select a link:")
-        for name, link in chatbot.links.items():
-            if st.button(name):
+    # Button to select departments
+    if st.button("Select a department"):
+        st.write("Select a department:")
+        for department, link in chatbot.department_links.items():
+            if st.button(department):
                 open_link(link)
+
+    # Buttons for other links
+    for name, link in chatbot.other_links.items():
+        if st.button(name):
+            open_link(link)
 
 def open_link(url):
     st.markdown(f"[Open Link]({url})")
 
 if __name__ == "__main__":
     main()
-    
+        
