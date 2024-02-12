@@ -50,36 +50,39 @@ def get_response(user_input):
 def main():
     st.title("College Chatbot")
     st.write("You can start chatting. Type your message below.")
-    st.write("---")
 
-    user_input = st.text_input("You:")
-    st.write("---")
-    
-    # Initialize state variable for department selection
+    # Initialize state variables
+    user_input = ""
+    last_user_input = ""
     show_departments = False
     
-    if user_input:
-        bot_response = get_response(user_input)
-        st.markdown(f"**Bot:** {bot_response}")
+    while True:
+        # Display text input field
+        user_input = st.text_input("You:", value=user_input)
         
-        # Display department selection buttons only if user asks about departments
-        if bot_response == "Select a department:":
-            show_departments = True
-            st.write("---")
-            st.write("**Departments:**")
-            for department in department_links:
-                if st.button(department):
-                    bot_response = get_response(department)
-                    st.write("---")
-                    st.markdown(f"**Bot:** {bot_response}")
-        # Clear text input after processing user input
-        user_input = ""
-
-    # Hide department selection buttons if a department is selected
-    if not show_departments:
-        st.write("---")
+        if user_input != last_user_input:
+            last_user_input = user_input
+            
+            # Process user input and display bot response
+            bot_response = get_response(user_input)
+            st.markdown(f"**Bot:** {bot_response}")
+            
+            # Display department selection buttons only if user asks about departments
+            if bot_response == "Select a department:":
+                show_departments = True
+                st.write("**Departments:**")
+                for department in department_links:
+                    if st.button(department):
+                        bot_response = get_response(department)
+                        st.markdown(f"**Bot:** {bot_response}")
+            else:
+                show_departments = False
+        
+        # Hide department selection buttons if a department is selected
+        if not show_departments:
+            st.write("")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-            
+        
