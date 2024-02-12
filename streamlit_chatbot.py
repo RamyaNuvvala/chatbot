@@ -53,25 +53,22 @@ def main():
     # Initialize conversation history
     conversation_history = []
 
-    # Continue the conversation until the user exits
-    while True:
-        # Display text input field for user input
-        user_input = st.text_input("You:", key="user_input")
+    # Display text input field for user input
+    user_input = st.text_area("You:", placeholder="Type here and press Enter")
 
-        if user_input:
-            # Add user input to conversation history
-            conversation_history.append(f"You: {user_input}")
+    # If user input is not empty, process it
+    if user_input:
+        # Add user input to conversation history
+        conversation_history.append(f"You: {user_input}")
 
-            # Get bot response
-            bot_response = get_response(user_input)
-            conversation_history.append(f"Bot: {bot_response}")
+        # Get bot response
+        bot_response = get_response(user_input)
+        conversation_history.append(f"Bot: {bot_response}")
 
-            # Display conversation history
-            st.write("\n".join(conversation_history))
-
-            # Clear user input for the next iteration
-            user_input = ""
+        # Display conversation history
+        st.write("\n".join(conversation_history))
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
+        
