@@ -43,11 +43,13 @@ def main():
         chatbot.send_message(user_input)
 
     # Button to select departments
-    if st.button("Select a department"):
-        st.write("Select a department:")
-        for department, link in chatbot.department_links.items():
-            if st.button(department):
-                open_link(link)
+    if st.button("Departments"):
+        st.write("Select a department category:")
+        if st.button("Select"):
+            st.write("Select a department:")
+            for department, link in chatbot.department_links.items():
+                if st.button(department):
+                    open_link(link)
 
     # Buttons for other links
     for name, link in chatbot.other_links.items():
