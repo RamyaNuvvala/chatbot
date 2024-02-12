@@ -2,11 +2,16 @@ import streamlit as st
 
 class CollegeChatbot:
     def __init__(self):
-        self.department_links = {
+        self.college_links = {
+            "College Website": "http://www.collegewebsite.com",
+            "Moodle": "http://courses.rvrjc.ac.in/moodle/",
             "Computer Science and Engineering": "http://cse.rvrjcce.ac.in/",
             "Electronics and Communication Engineering": "http://ece.rvrjcce.ac.in/",
             "Electrical and Electronics Engineering": "http://eee.rvrjcce.ac.in/",
-            # Add more department links as needed
+            "Placement Details": "http://www.collegewebsite.com/placement",
+            "Notices": "http://www.collegewebsite.com/notices",
+            "Academic Calendar": "http://www.collegewebsite.com/academic-calendar",
+            # Add more links as needed
         }
 
     def send_message(self, user_message):
@@ -24,7 +29,7 @@ def main():
     st.markdown(
         """
         #### Welcome to the College Chatbot!
-        Ask me about the college website, departments, academic calendars, and more.
+        Ask me about the college website, Moodle, departments, placement details, notices, academic calendar, and more.
         """
     )
     chatbot = CollegeChatbot()
@@ -33,17 +38,27 @@ def main():
     if st.button("Send"):
         chatbot.send_message(user_input)
 
-    # Button to select departments
-    if st.button("Departments"):
-        selected_department = st.selectbox("Select a department:", ["Computer Science and Engineering", 
-                                                                   "Electronics and Communication Engineering", 
-                                                                   "Electrical and Electronics Engineering"])
-        if selected_department:
-            open_link(chatbot.department_links[selected_department])
+    # Buttons for various links
+    if st.button("College Website"):
+        open_link(chatbot.college_links["College Website"])
+    if st.button("Moodle"):
+        open_link(chatbot.college_links["Moodle"])
+    if st.button("Computer Science and Engineering"):
+        open_link(chatbot.college_links["Computer Science and Engineering"])
+    if st.button("Electronics and Communication Engineering"):
+        open_link(chatbot.college_links["Electronics and Communication Engineering"])
+    if st.button("Electrical and Electronics Engineering"):
+        open_link(chatbot.college_links["Electrical and Electronics Engineering"])
+    if st.button("Placement Details"):
+        open_link(chatbot.college_links["Placement Details"])
+    if st.button("Notices"):
+        open_link(chatbot.college_links["Notices"])
+    if st.button("Academic Calendar"):
+        open_link(chatbot.college_links["Academic Calendar"])
 
 def open_link(url):
     st.markdown(f"[Open Link]({url})")
 
 if __name__ == "__main__":
     main()
-    
+        
