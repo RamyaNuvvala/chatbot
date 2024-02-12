@@ -16,6 +16,16 @@ department_links = {
     # Add more departments and corresponding links as needed
 }
 
+# List of department-related keywords
+department_keywords = ["department", "major", "faculty", "course"]
+
+# Function to check if user input is related to departments
+def is_department_related(user_input):
+    for keyword in department_keywords:
+        if keyword in user_input.lower():
+            return True
+    return False
+
 # Function to generate response based on user input
 def get_response(user_input):
     # Convert input to lowercase for case-insensitive matching
@@ -24,6 +34,10 @@ def get_response(user_input):
     # Check if input matches any departmental links
     if user_input.title() in department_links:
         return f"Here is the link to the {user_input.title()} department: [{user_input.title()}]({department_links[user_input.title()]})"
+    
+    # Check if input is related to departments
+    elif is_department_related(user_input):
+        return "Select a department:"
     
     # Check if input matches any predefined responses
     elif user_input in responses:
@@ -42,13 +56,14 @@ def main():
         bot_response = get_response(user_input)
         st.markdown(f"Bot: {bot_response}")
         
-        # Create department selection buttons
-        st.write("Select a department:")
-        for department in department_links:
-            if st.button(department):
-                bot_response = get_response(department)
-                st.markdown(f"Bot: {bot_response}")
+        # Display department selection buttons only if user asks about departments
+        if bot_response == "Select a department:":
+            for department in department_links:
+                if st.button(department):
+                    bot_response = get_response(department)
+                    st.markdown(f"Bot: {bot_response}")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
+    
