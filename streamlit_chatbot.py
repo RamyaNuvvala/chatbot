@@ -45,49 +45,35 @@ def get_response(user_input):
     else:
         return responses["default"]
 
+# Function to save feedback to a file
+def save_feedback(feedback):
+    with open("feedback.txt", "a") as file:
+        file.write(feedback + "\n")
+
 # Main function to interact with the user
 def main():
     st.title("College Chatbot")
     st.write("Welcome! Type your message below.")
 
-    # Initialize conversation history
-    conversation_history = []
-
-    # Display text input field for user input
-    user_input = st.text_input("You:")
-
-    # Create a placeholder for feedback
-    feedback_placeholder = st.empty()
-
-    # Feedback button at the bottom right corner
-    feedback_placeholder.text("Have suggestions to improve the chatbot? Provide feedback here.")
-    feedback = feedback_placeholder.text_area("", max_chars=500)
-
-    if feedback:
-        # Save feedback to a file or database
-        save_feedback(feedback)
-        st.success("Thank you for your feedback! We appreciate your input.")
-
     while True:
-        if user_input:
-            # Add user input to conversation history
-            conversation_history.append(f"You: {user_input}")
+        # Display text input field for user input
+        user_input = st.text_input("You:")
 
+        if user_input:
             # Get bot response
             bot_response = get_response(user_input)
-            conversation_history.append(f"Bot: {bot_response}")
 
-            # Display conversation history
-            st.text("\n".join(conversation_history))
+            # Display bot response
+            st.text("Bot: " + bot_response)
 
-        # Exit the loop if the user input is empty
-        if not user_input:
-            break
+            # Clear the input field after processing
+            st.text_input("")
 
-# Function to save feedback to a text file
-def save_feedback(feedback):
-    with open("feedback.txt", "a") as file:
-        file.write(feedback + "\n")
+            # Check if user input is feedback
+            if user_input.lower().startswith("feedback:"):
+                feedback = user_input[len("feedback:"):].strip()
+                save_feedback(feedback)
+                st.success("Thank you for your feedback! We appreciate your input.")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
