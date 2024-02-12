@@ -19,10 +19,19 @@ def main():
     # Display welcoming message automatically when the chatbot is loaded
     st.write("Hello! Welcome to the College Chatbot. How can I assist you today?")
 
+    # Button for departments label
+    if st.button("Departments"):
+        st.write("Select a department:")
+        # Buttons for each department
+        st.button("Computer Science and Engineering")
+        st.button("Electronics and Communication Engineering")
+        st.button("Electrical and Electronics Engineering")
+        # Add more department buttons as needed
+
     user_input = st.text_input("You:")
     if st.button("Send"):
         chatbot.send_message(user_input)
 
 if __name__ == "__main__":
     main()
-    
+        
