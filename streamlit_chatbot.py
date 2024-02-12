@@ -37,9 +37,12 @@ def main():
         st.write("Select a department:")
         # Scroll-down selection for departments
         selected_department = st.selectbox("", list(department_links.keys()))
-        if st.button("Open Department Link"):
-            st.write(f"Opening link for {selected_department}:")
-            webbrowser.open_new_tab(department_links[selected_department])
+        if selected_department:
+            if st.button("Open Department Link"):
+                st.write(f"Opening link for {selected_department}:")
+                webbrowser.open_new_tab(department_links[selected_department])
+        else:
+            st.write("Please select a department first.")
 
 if __name__ == "__main__":
     main()
