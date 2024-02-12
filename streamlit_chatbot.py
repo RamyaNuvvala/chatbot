@@ -50,24 +50,28 @@ def main():
     st.title("College Chatbot")
     st.write("Welcome! Type your message below.")
 
-    # Initialize conversation history
-    conversation_history = []
-
     # Display text input field for user input
     user_input = st.text_input("You:")
 
+    # Initialize feedback variable
+    feedback = ""
+
     if user_input:
-        # Add user input to conversation history
-        conversation_history.append(f"You: {user_input}")
-
-        # Get bot response
         bot_response = get_response(user_input)
-        conversation_history.append(f"Bot: {bot_response}")
-
-        # Display conversation history
-        st.text_area("Conversation History:", value="\n".join(conversation_history), height=200, readonly=True)
+        st.markdown(f"**Bot:** {bot_response}")
+        st.text_input("You:", value="", key="text_input")  # Clear text input field after user submits a question
+    
+    # Feedback button
+    if st.button("Feedback", key="feedback_button"):
+        st.sidebar.header("Feedback")
+        feedback = st.sidebar.text_area("Please provide your feedback:", max_chars=500)
+        if st.sidebar.button("Submit Feedback"):
+            if feedback:
+                st.sidebar.success("Thank you for your feedback! We appreciate your input.")
+            else:
+                st.sidebar.warning("Please provide your feedback before submitting.")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-                                                                                  
+    
