@@ -50,30 +50,27 @@ def main():
     st.title("College Chatbot")
     st.write("Welcome! Type your message below.")
 
-    # Display text input field for user input
-    user_input = st.text_input("You:")
-    
+    # Initialize feedback variable
+    feedback = ""
+
+    # Text area for user input
+    user_input = st.text_area("You:")
+
+    # If user input is not empty, process it
     if user_input:
+        # Display bot response
         bot_response = get_response(user_input)
         st.markdown(f"**Bot:** {bot_response}")
-
-        # Feedback form
-        feedback = st.text_area("Please provide your feedback:", max_chars=500)
-        if st.button("Submit Feedback"):
+    
+    # Feedback button
+    if st.button("Feedback", key="feedback_button"):
+        st.sidebar.header("Feedback")
+        feedback = st.sidebar.text_area("Please provide your feedback:", max_chars=500)
+        if st.sidebar.button("Submit Feedback"):
             if feedback:
-                st.success("Thank you for your feedback! We appreciate your input.")
+                st.sidebar.success("Thank you for your feedback! We appreciate your input.")
             else:
-                st.warning("Please provide your feedback before submitting.")
-        
-        # Feedback button
-        if st.button("Feedback"):
-            st.sidebar.header("Feedback")
-            feedback_sidebar = st.sidebar.text_area("Please provide your feedback:", max_chars=500)
-            if st.sidebar.button("Submit Feedback"):
-                if feedback_sidebar:
-                    st.sidebar.success("Thank you for your feedback! We appreciate your input.")
-                else:
-                    st.sidebar.warning("Please provide your feedback before submitting.")
+                st.sidebar.warning("Please provide your feedback before submitting.")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
