@@ -50,20 +50,42 @@ def get_response(user_input):
 def main():
     st.title("College Chatbot")
     st.write("You can start chatting. Type your message below.")
+    st.write("---")
 
-    user_input = st.text_input("You:")
+    # Initialize state variable for last user input
+    last_user_input = st.empty()
+    
+    user_input = last_user_input.text_input("You:")
+    st.write("---")
+    
+    # Initialize state variable for department selection
+    show_departments = False
+    
     if user_input:
         bot_response = get_response(user_input)
-        st.markdown(f"Bot: {bot_response}")
+        st.markdown(f"**Bot:** {bot_response}")
         
         # Display department selection buttons only if user asks about departments
         if bot_response == "Select a department:":
+            show_departments = True
+            st.write("---")
+            st.write("**Departments:**")
             for department in department_links:
                 if st.button(department):
                     bot_response = get_response(department)
-                    st.markdown(f"Bot: {bot_response}")
+                    st.write("---")
+                    st.markdown(f"**Bot:** {bot_response}")
+            # Reset last user input if a department is selected
+            last_user_input.text_input("You:", value="")
+        else:
+            # Update last user input if it's not related to departments
+            last_user_input.text_input("You:", value=user_input)
+    
+    # Hide department selection buttons if a department is selected
+    if not show_departments:
+        st.write("---")
 
 # Call the main function to start the Streamlit app
 if __name__ == "__main__":
     main()
-    
+        
