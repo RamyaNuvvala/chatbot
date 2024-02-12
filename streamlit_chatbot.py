@@ -33,15 +33,13 @@ def main():
     if st.button("Send"):
         chatbot.send_message(user_input)
 
-    # Example of using text as buttons for specific selections
-    st.write("Select a department:")
-    if st.button("Computer Science and Engineering"):
-        open_link(chatbot.department_links["Computer Science and Engineering"])
-    if st.button("Electronics and Communication Engineering"):
-        open_link(chatbot.department_links["Electronics and Communication Engineering"])
-    if st.button("Electrical and Electronics Engineering"):
-        open_link(chatbot.department_links["Electrical and Electronics Engineering"])
-    # Add more buttons for other departments
+    # Button to select departments
+    if st.button("Departments"):
+        selected_department = st.selectbox("Select a department:", ["Computer Science and Engineering", 
+                                                                   "Electronics and Communication Engineering", 
+                                                                   "Electrical and Electronics Engineering"])
+        if selected_department:
+            open_link(chatbot.department_links[selected_department])
 
 def open_link(url):
     st.markdown(f"[Open Link]({url})")
