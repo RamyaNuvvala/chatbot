@@ -18,13 +18,14 @@ def chatbot_response(question):
 def main():
     st.title("College Chatbot")
 
-    # Ask predefined questions and display responses
-    questions = ["hi", "how are you", "college", "program", "admissions"]
-    for question in questions:
-        response = chatbot_response(question)
-        st.write("Question:", question)
+    # Ask for user input
+    user_input = st.text_input("Enter your question:")
+
+    # Process input and display response
+    if user_input:
+        response = chatbot_response(user_input)
         st.write("Response:", response)
 
 if __name__ == "__main__":
     main()
-  
+    
