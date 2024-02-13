@@ -38,15 +38,13 @@ def main():
             # Display bot response and user question
             st.write(f"Question: {question}")
             st.write(f"Response: {bot_response}")
-            # Provide input field for asking another question
-            st.text_input("Ask another question:", key="new_question")
 
     # Display conversation history
     st.markdown("---")
     st.markdown("**Conversation History**")
-    for q, a in conversation:
-        st.write(f"Question: {q}")
-        st.write(f"Response: {a}")
+    for idx, (q, a) in enumerate(conversation):
+        st.write(f"Question {idx+1}: {q}")
+        st.write(f"Response {idx+1}: {a}")
 
     # Update conversation history in session state
     st.session_state.conversation = conversation
