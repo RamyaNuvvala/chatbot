@@ -33,11 +33,5 @@ def main():
                 st.write(f"Response: {response}")
                 st.markdown("---")
 
-    st.write("All questions asked and their responses:")
-    for idx, question in enumerate(questions):
-        response = chatbot_response(question)
-        st.write(f"{idx + 1}. Question: {question} - Response: {response}")
-
 if __name__ == "__main__":
     main()
-    
