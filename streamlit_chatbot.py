@@ -28,19 +28,22 @@ def main():
     st.title("College Chatbot")
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
 
-    conversation = st.session_state.get("conversation", [])
-    user_input = st.text_input("You:", key="user_input", value="\n".join([msg[1] for msg in conversation if msg[0] == "You"]))
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = []
+
+    user_input = st.text_input("You:", key="user_input", value="\n".join([msg[1] for msg in st.session_state.conversation if msg[0] == "You"]))
     
     if st.button("Send"):
         if user_input:
-            conversation = chatbot_response(user_input, conversation)
-            st.session_state.user_input = ""  # Clear input text area after sending the question
+            st.session_state.conversation = chatbot_response(user_input, st.session_state.conversation)
+            st.session_state.sync()  # Sync session state after updating
 
     # Display conversation history
     st.markdown("---")
     st.markdown("**Conversation History**")
-    for sender, message in conversation:
+    for sender, message in st.session_state.conversation:
         st.write(f"{sender}: {message}")
 
 if __name__ == "__main__":
     main()
+    
