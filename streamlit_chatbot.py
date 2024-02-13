@@ -19,12 +19,10 @@ def main():
     st.title("College Chatbot")
     question = st.text_input("Enter your question:")
 
-    if st.button("Ask"):
-        if question.strip():
-            response = chatbot_response(question)
-            st.write(f"Question: {question}")
-            st.write(f"Response: {response}")
+    if question:
+        response = chatbot_response(question)
+        st.write(f"Question: {question}")
+        st.write(f"Response: {response}")
 
 if __name__ == "__main__":
     main()
-    
