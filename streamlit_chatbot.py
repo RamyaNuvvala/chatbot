@@ -24,11 +24,12 @@ def main():
     st.components.v1.html(html_code)
 
     # Retrieve question from HTML form
-    question = st.session_state.get("question", "")
+    question = st.session_state.get("question", {}).get("question", "")
 
     # Process question and display response
     if question:
         response = chatbot_response(question)
+        st.write("Question:", question)
         st.write("Response:", response)
 
 if __name__ == "__main__":
