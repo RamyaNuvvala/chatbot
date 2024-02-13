@@ -17,10 +17,11 @@ def chatbot_response(question):
 
 def main():
     st.title("College Chatbot")
+    counter = 0
 
     while True:
         # Ask for user input
-        user_input = st.text_input("Enter your question (type 'quit' to exit):", key="user_input")
+        user_input = st.text_input(f"Enter your question (type 'quit' to exit):", key=f"user_input_{counter}")
 
         # Check if user wants to exit
         if user_input.lower() == 'quit':
@@ -29,6 +30,8 @@ def main():
         # Process input and display response
         response = chatbot_response(user_input)
         st.write("Response:", response)
+
+        counter += 1
 
 if __name__ == "__main__":
     main()
