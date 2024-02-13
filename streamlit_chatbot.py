@@ -24,8 +24,10 @@ def main():
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
 
     conversation = st.session_state.get("conversation", [])
-    user_input = st.text_input("You:", key="user_input", value="")
-
+    
+    # Get user input
+    user_input = st.text_input("You:")
+    
     if st.button("Send"):
         if user_input:
             # Add user input to the conversation history
@@ -34,10 +36,8 @@ def main():
             bot_response = chatbot_response(user_input)
             # Add bot response to the conversation history
             conversation.append(("Bot", bot_response[0]))
-            # Clear the user input field
-            st.session_state.user_input = ""
-            # Update conversation in session state
-            st.session_state.conversation = conversation
+            # Clear the input field
+            user_input = ""
 
     # Display conversation history
     st.markdown("---")
@@ -45,8 +45,8 @@ def main():
     for sender, message in conversation:
         st.write(f"{sender}: {message}")
 
+    # Update conversation in session state
+    st.session_state.conversation = conversation
+
 if __name__ == "__main__":
     main()
-
-    
-
