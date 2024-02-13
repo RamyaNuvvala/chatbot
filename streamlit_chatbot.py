@@ -1,5 +1,6 @@
 import streamlit as st
 import re
+import random
 
 # Define patterns and corresponding responses
 patterns_responses = {
@@ -13,9 +14,10 @@ patterns_responses = {
 def chatbot_response(user_input, chat_history):
     for pattern, responses in patterns_responses.items():
         if re.search(pattern, user_input.lower()):
-            return responses, chat_history
+            response = random.choice(responses)
+            return response, chat_history
 
-    return ["I'm sorry, I don't understand that. Can you please rephrase?"], chat_history
+    return "I'm sorry, I don't understand that. Can you please rephrase?", chat_history
 
 # Streamlit app
 def main():
@@ -27,21 +29,18 @@ def main():
     user_input = st.text_input("You:", "")
     if st.button("Send"):
         if user_input:
-            bot_responses, chat_history = chatbot_response(user_input, chat_history)
+            bot_response, chat_history = chatbot_response(user_input, chat_history)
             chat_history.append(("You", user_input))
-            for response in bot_responses:
-                chat_history.append(("Bot", response))
-                st.write(f"Bot: {response}")
+            chat_history.append(("Bot", bot_response))
+            st.write(f"Bot: {bot_response}")
+            st.text_input("You:", value="", key="user_input")  # Clear input area
 
     # Display chat history
     if chat_history:
         st.markdown("---")
         st.markdown("**Chat History**")
         for sender, message in chat_history:
-            if sender == "You":
-                st.write(f"You: {message}")
-            else:
-                st.write(f"Bot: {message}")
+            st.write(f"{sender}: {message}")
 
 if __name__ == "__main__":
     main()
