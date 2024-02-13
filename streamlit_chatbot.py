@@ -38,7 +38,7 @@ def main():
             conversation.append(("You", user_input))
             conversation.append(("Bot", bot_response[0]))  # Just taking the first response
             # Clear user input field
-            st.text_input("You:", value="", key="user_input")
+            st.session_state.user_input = ""
 
     # Display conversation history
     st.markdown("---")
