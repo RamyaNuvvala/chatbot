@@ -18,11 +18,15 @@ def chatbot_response(question):
 def main():
     st.title("College Chatbot")
 
-    # Ask for user input
-    user_input = st.text_input("Enter your question:")
+    while True:
+        # Ask for user input
+        user_input = st.text_input("Enter your question (type 'quit' to exit):")
 
-    # Process input and display response
-    if user_input:
+        # Check if user wants to exit
+        if user_input.lower() == 'quit':
+            break
+
+        # Process input and display response
         response = chatbot_response(user_input)
         st.write("Response:", response)
 
