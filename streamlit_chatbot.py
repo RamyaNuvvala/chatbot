@@ -22,6 +22,9 @@ def chatbot_response(user_input):
 def main():
     st.title("College Chatbot")
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
+    st.markdown("""
+    <link rel="stylesheet" href="style.css">
+    """, unsafe_allow_html=True)
 
     conversation = st.session_state.get("conversation", [])
     
