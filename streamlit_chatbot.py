@@ -31,8 +31,6 @@ def main():
     question = st.text_input("Question:", value="")
     if st.button("Ask Question"):
         if question:
-            # Clear previous response
-            st.empty()
             # Get bot response
             bot_response = chatbot_response(question)
             # Append question and bot response to conversation history and questions
