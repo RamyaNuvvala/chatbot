@@ -31,11 +31,15 @@ def main():
     question = st.text_input("Question:", value="")
     if st.button("Ask Question"):
         if question:
+            # Clear previous response
+            st.empty()
             # Get bot response
             bot_response = chatbot_response(question)
             # Append question and bot response to conversation history and questions
             conversation.append((question, bot_response))
             questions.append(question)
+            # Display bot response
+            st.write(f"Response: {bot_response}")
             # Clear input field after asking question
             st.text_input("Question:", value="", key="input")
 
