@@ -27,10 +27,7 @@ def main():
     conversation = st.session_state.get("conversation", [])
 
     # Get user input
-    user_input = st.session_state.get("user_input", "")
-
-    # Display input field
-    user_input = st.text_input("You:", value=user_input)
+    user_input = st.text_input("You:", value="", key="user_input")
 
     # Process user input when Send button is clicked
     if st.button("Send"):
@@ -40,6 +37,8 @@ def main():
             # Append user input and bot response to conversation history
             conversation.append(("You", user_input))
             conversation.append(("Bot", bot_response[0]))  # Just taking the first response
+            # Clear user input field
+            st.session_state.user_input = ""
 
     # Display conversation history
     st.markdown("---")
@@ -47,9 +46,8 @@ def main():
     for sender, message in conversation:
         st.write(f"{sender}: {message}")
 
-    # Update conversation and user input in session state
+    # Update conversation in session state
     st.session_state.conversation = conversation
-    st.session_state.user_input = user_input
 
 if __name__ == "__main__":
     main()
