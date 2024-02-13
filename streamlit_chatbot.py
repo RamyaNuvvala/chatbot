@@ -19,25 +19,24 @@ def main():
     st.title("College Chatbot")
     questions = []
 
-    while True:
-        user_input = st.text_input("Enter your question (type 'quit' to exit):")
+    with st.form(key='question_form'):
+        user_input = st.text_input("Enter your question (type 'quit' to exit):", key='user_input')
 
-        if user_input.lower() == 'quit':
-            break
+        if st.form_submit_button("Ask"):
+            if user_input.lower() == 'quit':
+                st.stop()
 
-        if user_input.strip():  # Check if input is not empty
-            questions.append(user_input)
-            response = chatbot_response(user_input)
-            st.write(f"Question: {user_input}")
-            st.write(f"Response: {response}")
-            st.markdown("---")
-            
-            # Display next question input field
-            st.text_input("Enter your next question:")
+            if user_input.strip():  # Check if input is not empty
+                questions.append(user_input)
+                response = chatbot_response(user_input)
+                st.write(f"Question: {user_input}")
+                st.write(f"Response: {response}")
+                st.markdown("---")
 
-    st.write("All questions asked:")
+    st.write("All questions asked and their responses:")
     for idx, question in enumerate(questions):
-        st.write(f"{idx + 1}. {question}")
+        response = chatbot_response(question)
+        st.write(f"{idx + 1}. Question: {question} - Response: {response}")
 
 if __name__ == "__main__":
     main()
