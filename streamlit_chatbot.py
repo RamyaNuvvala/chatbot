@@ -33,8 +33,8 @@ def main():
             chat_history.append(("You", user_input))
             chat_history.append(("Bot", bot_response))
             st.write(f"Bot: {bot_response}")
-            st.session_state.chat_history = chat_history
-            st.session_state.user_input = ""  # Clear input area
+            st.session_state["chat_history"] = chat_history
+            st.session_state["user_input"] = ""  # Clear input area
 
     # Display chat history
     st.markdown("---")
