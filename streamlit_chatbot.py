@@ -17,12 +17,24 @@ def chatbot_response(question):
 
 def main():
     st.title("College Chatbot")
-    user_input = st.text_input("Enter your question:")
-    if user_input:
+    questions = []
+
+    while True:
+        user_input = st.text_input("Enter your question (type 'quit' to exit):")
+
+        if user_input.lower() == 'quit':
+            break
+
+        questions.append(user_input)
         response = chatbot_response(user_input)
-        st.write("Response:", response)
-        st.text_input("Enter your next question:")
+        st.write(f"Question: {user_input}")
+        st.write(f"Response: {response}")
+        st.write("---")
+    
+    st.write("All questions asked:")
+    for idx, question in enumerate(questions):
+        st.write(f"{idx + 1}. {question}")
 
 if __name__ == "__main__":
     main()
-    
+        
