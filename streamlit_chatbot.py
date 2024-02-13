@@ -25,8 +25,11 @@ def main():
 
     conversation = st.session_state.get("conversation", [])
     
+    # Initialize user input to an empty string
+    user_input = ""
+    
     # Get user input
-    user_input = st.text_input("You:")
+    user_input = st.text_input("You:", value=user_input)
     
     if st.button("Send"):
         if user_input:
@@ -36,7 +39,7 @@ def main():
             bot_response = chatbot_response(user_input)
             # Add bot response to the conversation history
             conversation.append(("Bot", bot_response[0]))
-            # Clear the input field
+            # Clear the input field by setting user_input to an empty string
             user_input = ""
 
     # Display conversation history
