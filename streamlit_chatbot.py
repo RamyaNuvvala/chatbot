@@ -20,7 +20,7 @@ def main():
 
     while True:
         # Ask for user input
-        user_input = st.text_input("Enter your question (type 'quit' to exit):")
+        user_input = st.text_input("Enter your question (type 'quit' to exit):", key="user_input")
 
         # Check if user wants to exit
         if user_input.lower() == 'quit':
