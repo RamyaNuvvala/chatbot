@@ -22,27 +22,22 @@ def chatbot_response(user_input):
 def main():
     st.title("College Chatbot")
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
-    st.markdown("""
-    <link rel="stylesheet" href="style.css">
-    """, unsafe_allow_html=True)
 
+    # Initialize conversation history from session state or create new if not exists
     conversation = st.session_state.get("conversation", [])
-    
-    # Initialize user input to an empty string
-    user_input = ""
-    
+
     # Get user input
-    user_input = st.text_input("You:", value=user_input)
-    
+    user_input = st.text_input("You:", value="")
+
+    # Process user input when Send button is clicked
     if st.button("Send"):
         if user_input:
-            # Add user input to the conversation history
-            conversation.append(("You", user_input))
             # Get bot response
             bot_response = chatbot_response(user_input)
-            # Add bot response to the conversation history
-            conversation.append(("Bot", bot_response[0]))
-            # Clear the input field by setting user_input to an empty string
+            # Append user input and bot response to conversation history
+            conversation.append(("You", user_input))
+            conversation.append(("Bot", bot_response[0]))  # Just taking the first response
+            # Clear user input field
             user_input = ""
 
     # Display conversation history
