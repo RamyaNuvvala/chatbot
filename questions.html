@@ -4,37 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
 </head>
 <body>
     <h2>Ask a Question</h2>
     <form id="question-form">
-        <input type="text" id="question" placeholder="Enter your question...">
-        <input type="submit" value="Ask">
+        <input type="text" id="question" name="question" placeholder="Enter your question...">
+        <button type="submit">Ask</button>
     </form>
     <div id="response"></div>
 
@@ -42,9 +17,9 @@
         document.getElementById("question-form").addEventListener("submit", function(event) {
             event.preventDefault();
             var question = document.getElementById("question").value;
-            document.getElementById("response").innerHTML += "<p><strong>You:</strong> " + question + "</p>";
-            document.getElementById("question").value = "";
-            // Call a function to send the question to the Python backend
+            document.getElementById("response").innerHTML = "<p>Your question: " + question + "</p>";
+            // You can send the question to the Streamlit app backend for processing here
+            // You may use JavaScript fetch API or other methods to send data to the backend
         });
     </script>
 </body>
