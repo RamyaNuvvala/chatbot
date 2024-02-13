@@ -35,8 +35,11 @@ def main():
             bot_response = chatbot_response(question)
             # Append question and bot response to conversation history
             conversation.append((question, bot_response))
-            # Display bot response
+            # Display bot response and user question
+            st.write(f"Question: {question}")
             st.write(f"Response: {bot_response}")
+            # Provide input field for asking another question
+            st.text_input("Ask another question:", key="new_question")
 
     # Display conversation history
     st.markdown("---")
