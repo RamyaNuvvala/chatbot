@@ -39,7 +39,7 @@ def main():
             # Display bot response
             st.write(f"Response: {bot_response}")
             # Clear input field after asking question
-            st.session_state.input_question = ""
+            st.session_state.input_question = None
 
     # Display conversation history
     st.markdown("---")
