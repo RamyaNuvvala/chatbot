@@ -31,17 +31,19 @@ def main():
     question = st.text_input("Ask a question:")
     if st.button("Ask"):
         if question:
-            # Append question to conversation history
-            conversation.append((question, chatbot_response(question)))
+            # Get bot response
+            bot_response = chatbot_response(question)
+            # Append question and bot response to conversation history
+            conversation.append((question, bot_response))
             # Display bot response
-            st.write(f"Response: {conversation[-1][1]}")
+            st.write(f"Response: {bot_response}")
 
     # Display conversation history
     st.markdown("---")
     st.markdown("**Conversation History**")
-    for idx, (q, a) in enumerate(conversation):
-        st.write(f"{idx + 1}. Question: {q}")
-        st.write(f"   Response: {a}")
+    for q, a in conversation:
+        st.write(f"Question: {q}")
+        st.write(f"Response: {a}")
 
     # Update conversation history in session state
     st.session_state.conversation = conversation
