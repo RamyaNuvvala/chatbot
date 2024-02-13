@@ -25,16 +25,20 @@ def main():
         if user_input.lower() == 'quit':
             break
 
-        questions.append(user_input)
-        response = chatbot_response(user_input)
-        st.write(f"Question: {user_input}")
-        st.write(f"Response: {response}")
-        st.write("---")
-    
+        if user_input.strip():  # Check if input is not empty
+            questions.append(user_input)
+            response = chatbot_response(user_input)
+            st.write(f"Question: {user_input}")
+            st.write(f"Response: {response}")
+            st.markdown("---")
+            
+            # Display next question input field
+            st.text_input("Enter your next question:")
+
     st.write("All questions asked:")
     for idx, question in enumerate(questions):
         st.write(f"{idx + 1}. {question}")
 
 if __name__ == "__main__":
     main()
-        
+    
