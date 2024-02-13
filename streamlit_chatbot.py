@@ -1,30 +1,26 @@
 import streamlit as st
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
 
-# Create a ChatBot instance
-chatbot = ChatBot("MyChatBot")
+def chatbot_response(user_input):
+    user_input = user_input.lower()
+    if "hi" in user_input:
+        return "Hello!"
+    elif "how are you" in user_input:
+        return "I'm doing well, thank you!"
+    elif "college" in user_input:
+        return "Our college offers a variety of programs. What specific information are you looking for?"
+    else:
+        return "I'm sorry, I don't understand that. Can you please rephrase?"
 
-# Create a new trainer for the chatbot
-trainer = ChatterBotCorpusTrainer(chatbot)
-
-# Train the chatbot on the English corpus
-trainer.train("chatterbot.corpus.english")
-
-# Function to get response from the chatbot
-def get_response(user_input):
-    return chatbot.get_response(user_input)
-
-# Streamlit app
 def main():
-    st.title("ChatterBot Chatbot")
+    st.title("College Information Chatbot")
+    st.markdown("Welcome to our college chatbot! Ask me anything about our college.")
 
     user_input = st.text_input("You:", "")
     if st.button("Send"):
         if user_input:
-            bot_response = get_response(user_input)
+            bot_response = chatbot_response(user_input)
             st.write(f"Bot: {bot_response}")
 
 if __name__ == "__main__":
     main()
-    
+            
