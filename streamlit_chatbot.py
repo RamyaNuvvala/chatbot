@@ -24,23 +24,23 @@ def main():
     st.title("Pattern Matching Chatbot")
     st.markdown("Welcome to our chatbot! Feel free to ask questions.")
 
-    chat_history = []
+    chat_history = st.session_state.get("chat_history", [])
 
-    user_input = st.text_input("You:", "")
+    user_input = st.text_input("You:", key="user_input")
     if st.button("Send"):
         if user_input:
             bot_response, chat_history = chatbot_response(user_input, chat_history)
             chat_history.append(("You", user_input))
             chat_history.append(("Bot", bot_response))
             st.write(f"Bot: {bot_response}")
-            st.text_input("You:", value="", key="user_input")  # Clear input area
+            st.session_state.chat_history = chat_history
+            st.session_state.user_input = ""  # Clear input area
 
     # Display chat history
-    if chat_history:
-        st.markdown("---")
-        st.markdown("**Chat History**")
-        for sender, message in chat_history:
-            st.write(f"{sender}: {message}")
+    st.markdown("---")
+    st.markdown("**Chat History**")
+    for sender, message in chat_history:
+        st.write(f"{sender}: {message}")
 
 if __name__ == "__main__":
     main()
