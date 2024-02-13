@@ -1,5 +1,4 @@
 import streamlit as st
-import random
 
 # Define patterns and corresponding responses
 patterns_responses = {
@@ -12,36 +11,36 @@ patterns_responses = {
 }
 
 # Function to find matching pattern and return response
-def chatbot_response(user_input):
+def chatbot_response(user_input, conversation):
     for pattern, responses in patterns_responses.items():
         if pattern in user_input.lower():
-            return random.choice(responses)
+            conversation.append(("You", user_input))
+            bot_response = responses
+            conversation.append(("Bot", bot_response))
+            return conversation
 
-    return "I'm sorry, I don't understand that. Can you please rephrase?"
+    conversation.append(("You", user_input))
+    conversation.append(("Bot", "I'm sorry, I don't understand that. Can you please rephrase?"))
+    return conversation
 
 # Streamlit app
 def main():
     st.title("College Chatbot")
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
 
-    chat_history = st.session_state.get("chat_history", [])
-
-    user_input = st.text_input("You:", key="user_input")
+    conversation = st.session_state.get("conversation", [])
+    user_input = st.text_input("You:", key="user_input", value="\n".join([msg[1] for msg in conversation if msg[0] == "You"]))
+    
     if st.button("Send"):
         if user_input:
-            bot_response = chatbot_response(user_input)
-            chat_history.append(("You", user_input))
-            chat_history.append(("Bot", bot_response))
-            st.write(f"Bot: {bot_response}")
-            st.session_state.chat_history = chat_history
-            st.session_state.user_input = ""  # Clear input area
+            conversation = chatbot_response(user_input, conversation)
+            st.session_state.user_input = ""  # Clear input text area after sending the question
 
-    # Display chat history
+    # Display conversation history
     st.markdown("---")
-    st.markdown("**Chat History**")
-    for sender, message in chat_history:
+    st.markdown("**Conversation History**")
+    for sender, message in conversation:
         st.write(f"{sender}: {message}")
 
 if __name__ == "__main__":
     main()
-    
