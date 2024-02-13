@@ -26,28 +26,22 @@ def main():
     # Initialize conversation history from session state or create new if not exists
     conversation = st.session_state.get("conversation", [])
 
-    # Get user input
-    user_input = st.text_input("You:", value="", key="user_input")
+    # Get user input for each question
+    questions = []
+    while st.button("Ask Question"):
+        question = st.text_input("Question:", value="")
+        if question:
+            questions.append(question)
 
-    # Process user input when Send button is clicked
-    if st.button("Send"):
-        if user_input:
-            # Get bot response
-            bot_response = chatbot_response(user_input)
-            # Append user input and bot response to conversation history
-            conversation.append(("You", user_input))
-            conversation.append(("Bot", bot_response[0]))  # Just taking the first response
-            # Clear user input field
-            st.session_state.user_input = ""
+    # Process user questions and get bot responses
+    bot_responses = [chatbot_response(question) for question in questions]
 
-    # Display conversation history
+    # Display questions and responses
     st.markdown("---")
     st.markdown("**Conversation History**")
-    for sender, message in conversation:
-        st.write(f"{sender}: {message}")
-
-    # Update conversation in session state
-    st.session_state.conversation = conversation
+    for question, response in zip(questions, bot_responses):
+        st.write(f"Question: {question}")
+        st.write(f"Response: {response}")
 
 if __name__ == "__main__":
     main()
