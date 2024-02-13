@@ -23,8 +23,9 @@ def main():
     st.title("College Chatbot")
     st.markdown("Welcome to our college chatbot! Feel free to ask questions.")
 
-    # Initialize conversation history from session state or create new if not exists
+    # Initialize conversation history and bot responses from session state
     conversation = st.session_state.get("conversation", [])
+    bot_responses = st.session_state.get("bot_responses", [])
 
     # Get user input for each question
     questions = []
@@ -34,14 +35,23 @@ def main():
             questions.append(question)
 
     # Process user questions and get bot responses
-    bot_responses = [chatbot_response(question) for question in questions]
+    for question in questions:
+        # Get bot response
+        bot_response = chatbot_response(question)
+        # Append question and bot response to conversation history and bot responses
+        conversation.append(question)
+        bot_responses.append(bot_response)
 
-    # Display questions and responses
+    # Display questions and corresponding responses
     st.markdown("---")
     st.markdown("**Conversation History**")
-    for question, response in zip(questions, bot_responses):
+    for question, bot_response in zip(questions, bot_responses):
         st.write(f"Question: {question}")
-        st.write(f"Response: {response}")
+        st.write(f"Response: {bot_response}")
+
+    # Update conversation history and bot responses in session state
+    st.session_state.conversation = conversation
+    st.session_state.bot_responses = bot_responses
 
 if __name__ == "__main__":
     main()
