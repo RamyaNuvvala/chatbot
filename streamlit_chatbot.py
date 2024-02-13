@@ -37,7 +37,7 @@ def main():
             conversation.append((question, bot_response))
             questions.append(question)
             # Clear input field after asking question
-            st.session_state.question = ""
+            st.markdown("<script>document.getElementById('text-input-0').value = '';</script>", unsafe_allow_html=True)
 
     # Display conversation history
     st.markdown("---")
