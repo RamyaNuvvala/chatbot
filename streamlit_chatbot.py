@@ -23,8 +23,10 @@ def main():
         html_code = f.read()
     st.components.v1.html(html_code)
 
-    # Process questions and display responses
+    # Retrieve question from HTML form
     question = st.session_state.get("question", "")
+
+    # Process question and display response
     if question:
         response = chatbot_response(question)
         st.write("Response:", response)
