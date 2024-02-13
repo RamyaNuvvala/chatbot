@@ -11,13 +11,12 @@ patterns_responses = {
 }
 
 # Function to find matching pattern and return response
-def chatbot_response(user_input, chat_history):
+def chatbot_response(user_input):
     for pattern, responses in patterns_responses.items():
         if re.search(pattern, user_input.lower()):
-            response = random.choice(responses)
-            return response, chat_history
+            return random.choice(responses)
 
-    return "I'm sorry, I don't understand that. Can you please rephrase?", chat_history
+    return "I'm sorry, I don't understand that. Can you please rephrase?"
 
 # Streamlit app
 def main():
@@ -29,12 +28,12 @@ def main():
     user_input = st.text_input("You:", key="user_input")
     if st.button("Send"):
         if user_input:
-            bot_response, chat_history = chatbot_response(user_input, chat_history)
+            bot_response = chatbot_response(user_input)
             chat_history.append(("You", user_input))
             chat_history.append(("Bot", bot_response))
             st.write(f"Bot: {bot_response}")
-            st.session_state["chat_history"] = chat_history
-            st.session_state["user_input"] = ""  # Clear input area
+            st.session_state.chat_history = chat_history
+            st.session_state.user_input = ""  # Clear input area
 
     # Display chat history
     st.markdown("---")
