@@ -1,28 +1,33 @@
 import streamlit as st
-import random
+import time
 
-def chatbot_response(question):
-    patterns_responses = {
-        "hi": ["Hello!", "Hi there!", "Hey! How can I help you?"],
-        "how are you": ["I'm doing well, thank you!", "I'm great, thanks for asking!"],
-        "college": ["Our college offers a variety of programs. What specific information are you looking for?"],
-        "program": ["We offer programs in computer science, engineering, business, and more. What program are you interested in?"],
-        "admissions": ["Our admissions office can assist you with the application process. Do you have any specific questions about admissions?"],
-        # Add more patterns and responses as needed
-    }
-    for pattern, responses in patterns_responses.items():
-        if pattern in question.lower():
-            return random.choice(responses)
-    return "I'm sorry, I don't understand that. Can you please rephrase?"
+def college_chatbot(question):
+    question = question.lower()
+    if "admissions" in question:
+        return "For admissions information, please visit the college website or contact the admissions office."
+    elif "courses" in question:
+        return "You can find information about courses offered on the college website or in the course catalog."
+    elif "campus" in question:
+        return "The college campus is located at [Campus Address]. It includes various facilities such as libraries, laboratories, and sports facilities."
+    elif "events" in question:
+        return "You can stay updated about college events by checking the college website or following official social media channels."
+    elif "housing" in question or "accommodation" in question:
+        return "For information about housing options, you can contact the college housing office or visit the college website."
+    else:
+        return "I'm sorry, I don't have information about that. Please contact the college administration for further assistance."
 
 def main():
     st.title("College Chatbot")
-    question = st.text_input("Enter your question:")
 
-    if question:
-        response = chatbot_response(question)
-        st.write(f"Question: {question}")
-        st.write(f"Response: {response}")
+    question = st.text_input("You:")
+    if st.button("Ask"):
+        if question.strip():
+            response = college_chatbot(question)
+            st.write("College Chatbot:", response)
+            st.text_input("You:")  # Clearing the input field after asking a question
+        else:
+            st.warning("Please enter a question.")
 
 if __name__ == "__main__":
     main()
+        
