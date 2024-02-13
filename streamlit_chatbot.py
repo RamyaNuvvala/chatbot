@@ -36,7 +36,8 @@ def main():
     if st.button("Send"):
         if user_input:
             st.session_state.conversation = chatbot_response(user_input, st.session_state.conversation)
-            st.session_state.sync()  # Sync session state after updating
+            # Update URL query parameters with the updated session state
+            st.experimental_set_query_params(**{"user_input": ""})
 
     # Display conversation history
     st.markdown("---")
@@ -46,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
