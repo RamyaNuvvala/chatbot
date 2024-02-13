@@ -28,8 +28,8 @@ def main():
     questions = st.session_state.get("questions", [])
 
     # Get user input for each question
-    question = st.text_input("Question:", key="input_question")
-    if st.button("Ask Question"):
+    question = st.text_input("Ask a question:", key="input_question")
+    if st.button("Ask"):
         if question:
             # Get bot response
             bot_response = chatbot_response(question)
@@ -39,7 +39,7 @@ def main():
             # Display bot response
             st.write(f"Response: {bot_response}")
             # Clear input field after asking question
-            st.session_state.input_question = None
+            st.session_state.input_question = ""
 
     # Display conversation history
     st.markdown("---")
