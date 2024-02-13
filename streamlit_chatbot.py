@@ -29,7 +29,7 @@ def main():
 
     # Get user input for each question
     questions = []
-    while st.button("Ask Question"):
+    while st.button("Ask Question", key="ask_button"):
         question = st.text_input("Question:", value="")
         if question:
             questions.append(question)
