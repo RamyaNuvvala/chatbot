@@ -17,21 +17,18 @@ def chatbot_response(question):
 
 def main():
     st.title("College Chatbot")
-    questions = []
 
     with st.form(key='question_form'):
-        user_input = st.text_input("Enter your question (type 'quit' to exit):", key='user_input')
+        user_input = st.text_input("Enter your question:", key='user_input')
 
         if st.form_submit_button("Ask"):
-            if user_input.lower() == 'quit':
-                st.stop()
-
             if user_input.strip():  # Check if input is not empty
-                questions.append(user_input)
                 response = chatbot_response(user_input)
                 st.write(f"Question: {user_input}")
                 st.write(f"Response: {response}")
                 st.markdown("---")
+                st.text_input("Enter your next question:", key='next_question')
 
 if __name__ == "__main__":
     main()
+            
