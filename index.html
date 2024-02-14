@@ -4,7 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>College ChatBot</title>
-    <script src="https://cdn.jsdelivr.net/npm/compromise"></script>
+    <style>
+        /* CSS styles for the chat window */
+        #chat-window {
+            width: 400px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        /* CSS styles for user input */
+        #user-input {
+            width: 320px;
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        /* CSS styles for send button */
+        #send-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <div id="chat-window"></div>
@@ -32,9 +54,8 @@
                 if (userMessage) {
                     appendMessage("You", userMessage);
                     userInput.value = ""; // Clear the input field
-                    // Process user message and generate response
-                    var response = generateResponse(userMessage);
-                    appendMessage("ChatBot", response);
+                    // Simulate chatbot response (replace with actual response logic)
+                    appendMessage("ChatBot", getChatbotResponse(userMessage));
                 }
             }
 
@@ -48,48 +69,41 @@
                 }
             });
 
-            // Function to generate response based on user input
-            function generateResponse(userMessage) {
-                // Parse user input using compromise
-                var doc = nlp(userMessage);
-                // Extract topics from the input
-                var topics = doc.topics().out("array");
-
-                // Check if topics were detected
-                if (topics.length > 0) {
-                    // Respond based on the detected topics
-                    return getResponseForTopics(topics);
-                } else {
-                    // Respond with a generic message
-                    return "Thank you for your message!";
-                }
-            }
-
-            // Function to get response based on detected topics
-            function getResponseForTopics(topics) {
-                // Define responses based on topics
-                var responses = {
+            // Function to get chatbot response
+            function getChatbotResponse(userMessage) {
+                // Define college-related responses based on user queries
+                var collegeResponses = {
                     "courses": "Our college offers a variety of courses in fields such as computer science, engineering, business, etc.",
                     "faculty": "We have highly qualified faculty members who are experts in their respective fields.",
                     "admission": "For information about admission procedures, requirements, and deadlines, please visit our college website.",
                     "facilities": "Our campus provides state-of-the-art facilities including libraries, labs, sports facilities, and more."
-                    // Add more responses for other topics as needed
                 };
 
-                // Generate response based on detected topics
-                var response = "";
-                for (var i = 0; i < topics.length; i++) {
-                    if (responses.hasOwnProperty(topics[i])) {
-                        response += responses[topics[i]] + "\n";
+                // Define welcoming messages
+                var welcomingMessages = [
+                    "Welcome to College ChatBot! How can I assist you today?",
+                    "Hello! How can I help you with your college-related questions?",
+                    "Hi there! Feel free to ask me anything about our college.",
+                    "Greetings! What information are you looking for about our college?"
+                ];
+
+                // Check if the user's message contains any college-related keywords
+                for (var keyword in collegeResponses) {
+                    if (userMessage.toLowerCase().includes(keyword)) {
+                        return collegeResponses[keyword];
                     }
                 }
 
-                // If no relevant topics were detected
-                if (response === "") {
-                    response = "I'm sorry, I don't have information about that topic.";
+                // Check if the user's message contains any greeting words
+                var greetings = ["hi", "hello", "hey"];
+                for (var i = 0; i < greetings.length; i++) {
+                    if (userMessage.toLowerCase().includes(greetings[i])) {
+                        return welcomingMessages[Math.floor(Math.random() * welcomingMessages.length)];
+                    }
                 }
 
-                return response;
+                // If the user's message does not match any college-related keywords or greetings, return a default message
+                return "I'm sorry, I didn't understand that. How can I assist you?";
             }
         });
     </script>
