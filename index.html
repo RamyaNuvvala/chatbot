@@ -77,6 +77,7 @@
                     "faculty": "We have highly qualified faculty members who are experts in their respective fields.",
                     "admission": "For information about admission procedures, requirements, and deadlines, please visit our college website.",
                     "facilities": "Our campus provides state-of-the-art facilities including libraries, labs, sports facilities, and more."
+                    // Add more responses for other college-related queries as needed
                 };
 
                 // Define welcoming messages
@@ -86,6 +87,15 @@
                     "Hi there! Feel free to ask me anything about our college.",
                     "Greetings! What information are you looking for about our college?"
                 ];
+
+                // Define links to college resources
+                var collegeLinks = {
+                    "website": "Here is the link to our college website: <a href='https://www.collegewebsite.com' target='_blank'>College Website</a>",
+                    "moodle": "You can access our Moodle platform using this link: <a href='https://moodle.collegewebsite.com' target='_blank'>Moodle</a>",
+                    "departments": "To visit department websites, please check our college website for links to individual departments.",
+                    "placement": "For information about placements, please visit the college placement cell or check the college website for updates."
+                    // Add more links as needed
+                };
 
                 // Check if the user's message contains any college-related keywords
                 for (var keyword in collegeResponses) {
@@ -102,7 +112,14 @@
                     }
                 }
 
-                // If the user's message does not match any college-related keywords or greetings, return a default message
+                // Check if the user's message contains any links keywords
+                for (var linkKeyword in collegeLinks) {
+                    if (userMessage.toLowerCase().includes(linkKeyword)) {
+                        return collegeLinks[linkKeyword];
+                    }
+                }
+
+                // If the user's message does not match any college-related keywords, greetings, or links keywords, return a default message
                 return "I'm sorry, I didn't understand that. How can I assist you?";
             }
         });
