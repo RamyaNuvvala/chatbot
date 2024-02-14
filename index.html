@@ -26,6 +26,12 @@
             padding: 5px 10px;
             font-size: 16px;
         }
+        /* CSS styles for links */
+        .chat-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -42,7 +48,7 @@
             // Function to append a message to the chat window
             function appendMessage(sender, message) {
                 var messageElement = document.createElement("p");
-                messageElement.textContent = sender + ": " + message;
+                messageElement.innerHTML = sender + ": " + message; // Use innerHTML to include HTML content
                 chatWindow.appendChild(messageElement);
                 // Scroll to the bottom of the chat window
                 chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -90,8 +96,8 @@
 
                 // Define links to college resources
                 var collegeLinks = {
-                    "website": "Here is the link to our college website: <a href='https://www.collegewebsite.com' target='_blank'>College Website</a>",
-                    "moodle": "You can access our Moodle platform using this link: <a href='https://moodle.collegewebsite.com' target='_blank'>Moodle</a>",
+                    "website": "Here is the link to our college website: <a href='https://www.collegewebsite.com' target='_blank' class='chat-link'>College Website</a>",
+                    "moodle": "You can access our Moodle platform using this link: <a href='https://moodle.collegewebsite.com' target='_blank' class='chat-link'>Moodle</a>",
                     "departments": "To visit department websites, please check our college website for links to individual departments.",
                     "placement": "For information about placements, please visit the college placement cell or check the college website for updates."
                     // Add more links as needed
