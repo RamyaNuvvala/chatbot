@@ -1,50 +1,34 @@
-import streamlit as st
-from flask import Flask, request, jsonify
-import requests
-from threading import Thread
+class CollegeChatBot:
+    def __init__(self):
+        self.courses = {
+            "Computer Science": "Computer Science is the study of computers and computational systems.",
+            "Engineering": "Engineering is the application of scientific principles to design and build machines, structures, and systems.",
+            "Business Administration": "Business Administration focuses on managing and organizing business operations and strategies.",
+            # Add more courses as needed
+        }
 
-# Initialize Flask app
-app = Flask(__name__)
+    def start(self):
+        print("Welcome to CollegeChatBot! How can I help you?")
+        while True:
+            user_input = input("You: ").strip().lower()
+            if user_input == "exit":
+                print("CollegeChatBot: Goodbye!")
+                break
+            elif "courses" in user_input:
+                self.display_courses()
+            elif "admission" in user_input:
+                self.display_admission_info()
+            else:
+                print("CollegeChatBot: I'm sorry, I don't understand. Please ask about courses or admission.")
 
-# Function to respond to user input
-def college_chatbot(user_input):
-    responses = {
-        "hi": "Hello! How can I assist you today?",
-        "courses": "We offer a variety of courses including Computer Science, Engineering, Business, and more. Which one are you interested in?",
-        "admissions": "For admissions information, please visit our website or contact our admissions office.",
-        "facilities": "We have state-of-the-art facilities including labs, libraries, and recreational areas. Is there anything specific you'd like to know about?",
-        "default": "I'm sorry, I didn't understand that. Can you please rephrase or ask another question?"
-    }
-    return responses.get(user_input.lower(), responses["default"])
+    def display_courses(self):
+        print("CollegeChatBot: Here are the available courses:")
+        for course, description in self.courses.items():
+            print(f"{course}: {description}")
 
-# Define Flask route
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_input = request.form['user_input']
-    response = college_chatbot(user_input)
-    return jsonify({"response": response})
-
-def run_flask():
-    app.run(debug=False, host="localhost", port=5000)
-
-# Streamlit app layout
-def main():
-    st.title("College Chatbot")
-
-    user_input = st.text_input("You:")
-    if st.button("Ask"):
-        response = send_request(user_input)
-        st.write(f"College Chatbot: {response}")
-
-# Function to send request to Flask backend
-def send_request(user_input):
-    url = "http://localhost:5000/chat"
-    data = {"user_input": user_input}
-    response = requests.post(url, data=data)
-    return response.json()["response"]
+    def display_admission_info(self):
+        print("CollegeChatBot: For admission information, please visit our college website or contact the admissions office.")
 
 if __name__ == "__main__":
-    flask_thread = Thread(target=run_flask)
-    flask_thread.start()
-    main()
-    
+    chatbot = CollegeChatBot()
+    chatbot.start()
